@@ -29,7 +29,15 @@ jobs:
       working-directory: ./Dayvis_bot
     
     - name: 🚀 Run
-      run: dotnet run Dayvis_bot.csproj --configuration Release --no-build
+      run: |
+        echo "Checking token..."
+        if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
+          echo "❌ ERROR: Token is empty!"
+          exit 1
+        else
+          echo "✅ Token found (first 10 chars): ${TELEGRAM_BOT_TOKEN:0:10}..."
+        fi
+        dotnet run Dayvis_bot.csproj --configuration Release --no-build
       working-directory: ./Dayvis_bot
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
