@@ -1,13 +1,13 @@
-﻿using Telegram.Bot;
+using Telegram.Bot;
 
-partial class Program
+var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+
+if (string.IsNullOrWhiteSpace(token))
 {
-    static async Task Main(string[] args)
-    {
-        var bot = new TelegramBotClient("TELEGRAM_BOT_TOKEN");
-        var me = await bot.GetMe();
-        Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
-    }
-
+    Console.WriteLine("❌ ОШИБКА: Токен бота не найден!");
+    return;
 }
 
+var bot = new TelegramBotClient(token);
+var me = await bot.GetMe();
+Console.WriteLine($"✅ Бот запущен: {me.FirstName} (@{me.Username})");
