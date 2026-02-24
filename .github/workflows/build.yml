@@ -1,43 +1,43 @@
-name: Run Telegram Bot
+# name: Run Telegram Bot
 
-on:
-  schedule:
-    # Каждый час с 7:00 до 23:00 по Кыргызстану (UTC+6)
-    - cron: '0 1-17 * * *'
-  workflow_dispatch:
+# on:
+#   schedule:
+#     # Каждый час с 7:00 до 23:00 по Кыргызстану (UTC+6)
+#     - cron: '0 1-17 * * *'
+#   workflow_dispatch:
 
-jobs:
-  run-bot:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+# jobs:
+#   run-bot:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 60
     
-    steps:
-    - name: 📥 Checkout
-      uses: actions/checkout@v5
+#     steps:
+#     - name: 📥 Checkout
+#       uses: actions/checkout@v5
     
-    - name: 🛠️ Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+#     - name: 🛠️ Setup .NET
+#       uses: actions/setup-dotnet@v4
+#       with:
+#         dotnet-version: '8.0.x'
     
-    - name: 📦 Restore dependencies
-      run: dotnet restore Dayvis_bot.csproj
-      working-directory: ./Dayvis_bot
+#     - name: 📦 Restore dependencies
+#       run: dotnet restore Dayvis_bot.csproj
+#       working-directory: ./Dayvis_bot
     
-    - name: 🔨 Build
-      run: dotnet build Dayvis_bot.csproj --no-restore --configuration Release
-      working-directory: ./Dayvis_bot
+#     - name: 🔨 Build
+#       run: dotnet build Dayvis_bot.csproj --no-restore --configuration Release
+#       working-directory: ./Dayvis_bot
     
-    - name: 🚀 Run
-      run: |
-        echo "Checking token..."
-        if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
-          echo "❌ ERROR: Token is empty!"
-          exit 1
-        else
-          echo "✅ Token found (first 10 chars): ${TELEGRAM_BOT_TOKEN:0:10}..."
-        fi
-        dotnet run Dayvis_bot.csproj --configuration Release --no-build
-      working-directory: ./Dayvis_bot
-      env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#     - name: 🚀 Run
+#       run: |
+#         echo "Checking token..."
+#         if [ -z "$TELEGRAM_BOT_TOKEN" ]; then
+#           echo "❌ ERROR: Token is empty!"
+#           exit 1
+#         else
+#           echo "✅ Token found (first 10 chars): ${TELEGRAM_BOT_TOKEN:0:10}..."
+#         fi
+#         dotnet run Dayvis_bot.csproj --configuration Release --no-build
+#       working-directory: ./Dayvis_bot
+#       env:
+#         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
